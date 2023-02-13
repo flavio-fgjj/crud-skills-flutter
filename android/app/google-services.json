@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "826887894200",
+    "project_id": "crud-flutter-fiap",
+    "storage_bucket": "crud-flutter-fiap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826887894200:android:4c08867e509046821a304d",
+        "android_client_info": {
+          "package_name": "com.example.crud_flutter_fiap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826887894200-aplce0qr8ctj2un3rlvsqct6j8ln0gm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9wat8x55BldEY2adbmFsg6LogpBxDTK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826887894200-aplce0qr8ctj2un3rlvsqct6j8ln0gm6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "826887894200-h7r4ui73a56qrftck810ueo1somqo4je.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.crudFlutterFiap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
