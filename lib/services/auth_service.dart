@@ -16,10 +16,6 @@ class AuthService extends ChangeNotifier {
       user = (userAuth == null) ? null : userAuth;
       isLoading = false;
       notifyListeners();
-
     });
   }
-
-
-
 }

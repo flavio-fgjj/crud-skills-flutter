@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_screen.dart';
+import 'home_screen.dart';
 
 void main() {
   runApp(const SplashScreen());
@@ -16,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class StartState extends State<SplashScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -30,9 +31,15 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => const AuthScreen()
-    ));
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const AuthScreen()));
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      }
+    });
   }
 
   @override
@@ -51,8 +58,7 @@ class StartState extends State<SplashScreen> {
                   colors: [Color(0xffee4c83), Color(0xff2e2e2e)],
                   center: Alignment.center,
                   radius: 0.8,
-                )
-            ),
+                )),
           ),
           Center(
             child: Image.asset("assets/MBA.png"),
