@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:crud_flutter_fiap/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 
@@ -183,6 +184,12 @@ class StartState extends State<AuthScreen> {
     )));
   }
 
+  doSharedPref() async {
+    String? u = FirebaseAuth.instance.currentUser?.uid;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userId', u.toString());
+  }
+
   doLogin(BuildContext context) async {
     try {
       final navigator = Navigator.of(context);
@@ -190,6 +197,9 @@ class StartState extends State<AuthScreen> {
         email: email,
         password: password,
       );
+
+      doSharedPref();
+
       navigator.push(MaterialPageRoute(
         builder: (context) => const HomeScreen(),
       ));

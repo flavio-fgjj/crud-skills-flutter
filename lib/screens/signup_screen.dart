@@ -14,8 +14,9 @@ class InitState extends State<SignUpScreen> {
   Widget build(BuildContext context) => initWidget();
 
   String name = '';
-  String email = '';
   String phone = '';
+  String profilePicture = '';
+  String email = '';
   String password = '';
 
   Widget initWidget() {
@@ -24,7 +25,7 @@ class InitState extends State<SignUpScreen> {
             child: Column(
       children: [
         Container(
-          height: 250,
+          height: 200,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90)),
             color: Color(0xff2e2e2e),
@@ -35,12 +36,12 @@ class InitState extends State<SignUpScreen> {
             ),
           ),
           child: Center(
-              child: Column(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 10),
                 child: Image.asset(
                   "assets/MBA.png",
                   height: 90,
@@ -48,7 +49,7 @@ class InitState extends State<SignUpScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(right: 20, top: 20),
+                margin: const EdgeInsets.only(right: 20, top: 5),
                 alignment: Alignment.bottomRight,
                 child: const Text(
                   "Nova Conta",
@@ -62,7 +63,7 @@ class InitState extends State<SignUpScreen> {
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
           padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 54,
+          height: 35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Colors.grey[200],
@@ -98,28 +99,29 @@ class InitState extends State<SignUpScreen> {
           height: 54,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
+            color: const Color(0xffEEEEEE),
             boxShadow: const [
               BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
+                  offset: Offset(0, 20),
+                  blurRadius: 100,
                   color: Color(0xffEEEEEE)),
             ],
           ),
           child: TextField(
             cursorColor: const Color(0xff2e2e2e),
             decoration: const InputDecoration(
+              focusColor: Color(0xff2e2e2e),
               icon: Icon(
-                Icons.email,
+                Icons.phone,
                 color: Color(0xff2e2e2e),
               ),
-              hintText: "Email",
+              hintText: "Telefone",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
             onChanged: (text) {
               setState(() {
-                email = text;
+                phone = text;
               });
             },
           ),
@@ -144,16 +146,49 @@ class InitState extends State<SignUpScreen> {
             decoration: const InputDecoration(
               focusColor: Color(0xff2e2e2e),
               icon: Icon(
-                Icons.phone,
+                Icons.person,
                 color: Color(0xff2e2e2e),
               ),
-              hintText: "Telefone",
+              hintText: "Url do Profile (imagem)",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
             onChanged: (text) {
               setState(() {
-                phone = text;
+                profilePicture = text;
+              });
+            },
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          height: 54,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.grey[200],
+            boxShadow: const [
+              BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 50,
+                  color: Color(0xffEEEEEE)),
+            ],
+          ),
+          child: TextField(
+            cursorColor: const Color(0xff2e2e2e),
+            decoration: const InputDecoration(
+              icon: Icon(
+                Icons.email,
+                color: Color(0xff2e2e2e),
+              ),
+              hintText: "Email",
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+            onChanged: (text) {
+              setState(() {
+                email = text;
               });
             },
           ),
@@ -253,8 +288,9 @@ class InitState extends State<SignUpScreen> {
 
       final user = <String, String?>{
         "name": name,
-        "email": email,
         "phone": phone,
+        "profilePicture": profilePicture,
+        "email": email,
         "userId": credential.user?.uid,
       };
 
@@ -262,7 +298,7 @@ class InitState extends State<SignUpScreen> {
           .collection("Users")
           .doc(credential.user?.uid)
           .set(user)
-          .onError((e, _) => print("Error writing document: $e"));
+          .onError((e, _) => debugPrint("Error writing document: $e"));
 
       navigator.pop();
     } on FirebaseAuthException catch (e) {

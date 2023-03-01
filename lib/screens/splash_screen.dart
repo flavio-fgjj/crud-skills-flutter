@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crud_flutter_fiap/utils/security.utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -36,11 +37,21 @@ class StartState extends State<SplashScreen> {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const AuthScreen()));
       } else {
+        setPreferences(user.uid.toString());
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const HomeScreen()));
       }
     });
   }
+
+  Future<void> setPreferences(String userId) async {
+    SecurityPreferences pref = SecurityPreferences();
+    String aux = await pref.getUserId();
+    if (aux.isEmpty) {
+      await pref.initializePreference(userId);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
