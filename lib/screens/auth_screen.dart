@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:crud_flutter_fiap/screens/signup_screen.dart';
+import 'package:crud_flutter_fiap/utils/security.utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_screen.dart';
+import 'home/home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -113,6 +114,9 @@ class StartState extends State<AuthScreen> {
           ),
           child: TextField(
             cursorColor: const Color(0xff2e2e2e),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
             decoration: const InputDecoration(
               focusColor: Color(0xff2e2e2e),
               icon: Icon(
@@ -128,6 +132,7 @@ class StartState extends State<AuthScreen> {
                 password = text;
               });
             },
+
           ),
         ),
         GestureDetector(
@@ -146,9 +151,9 @@ class StartState extends State<AuthScreen> {
               color: const Color(0xff2e2e2e),
               boxShadow: const [
                 BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 50,
-                    color: Color(0xffEEEEEE)),
+                  offset: Offset(0, 10),
+                  blurRadius: 50,
+                  color: Color(0xffEEEEEE)),
               ],
             ),
             child: const Text(
@@ -185,9 +190,10 @@ class StartState extends State<AuthScreen> {
   }
 
   doSharedPref() async {
-    String? u = FirebaseAuth.instance.currentUser?.uid;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userId', u.toString());
+    String? userId = FirebaseAuth.instance.currentUser?.uid ?? "";
+
+    SecurityPreferences prefs = SecurityPreferences();
+    await prefs.initializePreference(userId);
   }
 
   doLogin(BuildContext context) async {
@@ -200,6 +206,7 @@ class StartState extends State<AuthScreen> {
 
       doSharedPref();
 
+      navigator.pop();
       navigator.push(MaterialPageRoute(
         builder: (context) => const HomeScreen(),
       ));

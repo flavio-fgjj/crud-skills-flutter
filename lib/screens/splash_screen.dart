@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_screen.dart';
-import 'home_screen.dart';
+import 'home/home_screen.dart';
 
 void main() {
   runApp(const SplashScreen());

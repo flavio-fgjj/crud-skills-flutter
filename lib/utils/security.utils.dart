@@ -13,5 +13,4 @@ class SecurityPreferences {
     String? aux = preferences?.getString("userId");
     return aux ?? "";
   }
-
 }
