@@ -156,23 +156,23 @@ class StartState extends State<HomeScreen> {
            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
            itemBuilder: (_, index) {
              final skill = skillsData[index];
-             return Material(
-                 child: Row(
-                   children: [
-                     Text(skill.skill),
-                   ],
-                 )
+             return ListTile(
+               leading: CircleAvatar(
+                 backgroundColor: const Color(0xffee4c83),
+                 child: Text((index + 1).toString()),
+               ),
+               title: Text('${skill.skill} | ${skill.level} level'),
+               subtitle: Text('${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
+               trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
              );
            },
-           separatorBuilder: (_, __) => const SizedBox(
-             height: 16,
-           ),
+           separatorBuilder: (_, __) => const Divider(),
            itemCount: skillsData.length
          ),
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {},
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xff2e2e2e),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation:    FloatingActionButtonLocation.endFloat,
