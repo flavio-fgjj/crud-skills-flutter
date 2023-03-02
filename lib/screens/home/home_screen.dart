@@ -71,8 +71,10 @@ class StartState extends State<HomeScreen> {
           .where('userId', isEqualTo: userId)
           .get();
 
-      //List<Map<String, dynamic>> skillsData1 = [];
-      List<SkillModel> skillsData1 = [];
+      setState(() {
+        skillsData = [];
+      });
+
       for (var doc in querySnapshot.docs) {
         // Getting data from map
         Map<String, dynamic> data = doc.data();
@@ -82,18 +84,28 @@ class StartState extends State<HomeScreen> {
           timeExperience: data['timeExperience'],
           userId: data['userId']
         );
-        //skillsData1.add(m);
         setState(() {
           skillsData.add(m);
         });
       }
-
-      // setState(() {
-      //   skillsData = skillsData1;
-      // });
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> _onDeleteItemPressed(String userId, String skill) async {
+    final querySnapshot = await FirebaseFirestore.instance
+    .collection('Skills')
+    .where('userId', isEqualTo: userId)
+    .where('skill', isEqualTo: skill)
+    .get()
+    .then((value) => {
+      for(var doc in value.docs) {
+        doc.reference.delete()
+      }
+    });
+
+    await getSkills();
   }
   //#endregion
 
@@ -156,14 +168,42 @@ class StartState extends State<HomeScreen> {
            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
            itemBuilder: (_, index) {
              final skill = skillsData[index];
-             return ListTile(
-               leading: CircleAvatar(
-                 backgroundColor: const Color(0xffee4c83),
-                 child: Text((index + 1).toString()),
+             return Dismissible(
+               key: Key(skill.userId),
+               child: ListTile(
+                 leading: CircleAvatar(
+                   backgroundColor: const Color(0xffee4c83),
+                   child: Text((index + 1).toString()),
+                 ),
+                 title: Text('${skill.skill} | ${skill.level} level'),
+                 subtitle: Text('${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
+                 //trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
+                 trailing: Row(
+                   mainAxisSize: MainAxisSize.min,
+                   children: <Widget>[
+                     IconButton(
+                       icon: const Icon(
+                         Icons.edit,
+                         size: 20.0,
+                         color: Color(0xff2e2e2e),
+                       ),
+                       onPressed: () {
+                         //   _onDeleteItemPressed(index);
+                       },
+                     ),
+                     IconButton(
+                       icon: const Icon(
+                         Icons.delete,
+                         size: 20.0,
+                         color: Color(0xff2e2e2e),
+                       ),
+                       onPressed: () {
+                         _onDeleteItemPressed(skill.userId, skill.skill);
+                       },
+                     ),
+                   ],
+                 ),
                ),
-               title: Text('${skill.skill} | ${skill.level} level'),
-               subtitle: Text('${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
-               trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
              );
            },
            separatorBuilder: (_, __) => const Divider(),
