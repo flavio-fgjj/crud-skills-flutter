@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/rounded_button.dart';
+
 class SignUpScreen extends StatefulWidget {
   static const String id = "/signup_screen";
   const SignUpScreen({super.key});
@@ -233,26 +235,7 @@ class InitState extends State<SignUpScreen> {
             // Write Click Listener Code Here.
             doSignup(context);
           },
-          child: Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            height: 54,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: const Color(0xff2e2e2e),
-              boxShadow: const [
-                BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 50,
-                    color: Color(0xffEEEEEE)),
-              ],
-            ),
-            child: const Text(
-              "CRIAR CONTA",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+          child: const RoundedButton(color: Color(0xff2e2e2e), text: "CRIAR CONTA"),
         ),
         Container(
           margin: const EdgeInsets.only(top: 10, bottom: 10),

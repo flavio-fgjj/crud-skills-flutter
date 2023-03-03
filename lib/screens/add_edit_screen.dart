@@ -4,6 +4,8 @@ import 'package:crud_flutter_fiap/utils/security_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/rounded_button.dart';
+
 class AddEditScreen extends StatefulWidget {
   static const String id = "/addedit_screen";
 
@@ -174,30 +176,15 @@ class StartState extends State<AddEditScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 16,
+              width: double.infinity,
+            ),
             GestureDetector(
               onTap: () {
                 save(context);
               },
-              child: Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                height: 54,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: const Color(0xff2e2e2e),
-                  boxShadow: const [
-                    BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 50,
-                        color: Color(0xffEEEEEE)),
-                  ],
-                ),
-                child: Text(
-                  widget.idCollection != '_' ? "Editar" : "Salvar",
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
+              child: RoundedButton(color: const Color(0xff2e2e2e), text: widget.idCollection != '_' ? "Editar" : "Salvar"),
             ),
             GestureDetector(
               onTap: () {
@@ -209,26 +196,7 @@ class StartState extends State<AddEditScreen> {
                       builder: (context) => const HomeScreen(),
                     ));
               },
-              child: Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                height: 54,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: const Color(0xffee4c83),
-                  boxShadow: const [
-                    BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 50,
-                        color: Color(0xffEEEEEE)),
-                  ],
-                ),
-                child: const Text(
-                  "Cancelar",
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
+              child: const RoundedButton(color: Color(0xffee4c83), text: "Cancelar"),
             ),
           ],
         )));

@@ -3,6 +3,7 @@ import 'package:crud_flutter_fiap/utils/security_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/rounded_button.dart';
 import 'home/home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -138,26 +139,7 @@ class StartState extends State<AuthScreen> {
             // ignore: avoid_print
             doLogin(context);
           },
-          child: Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            height: 54,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: const Color(0xff2e2e2e),
-              boxShadow: const [
-                BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 50,
-                    color: Color(0xffEEEEEE)),
-              ],
-            ),
-            child: const Text(
-              "LOGIN",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+          child: const RoundedButton(color: Color(0xff2e2e2e), text: "LOGIN"),
         ),
         Container(
           margin: const EdgeInsets.only(top: 2),
