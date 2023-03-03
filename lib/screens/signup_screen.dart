@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
+  static const String id = "/signup_screen";
   const SignUpScreen({super.key});
 
   @override
@@ -36,7 +37,7 @@ class InitState extends State<SignUpScreen> {
             ),
           ),
           child: Center(
-            child: Column(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

@@ -12,6 +12,7 @@ void main() {
 }
 
 class SplashScreen extends StatefulWidget {
+  static const String id = "/splash_screen";
   const SplashScreen({super.key});
 
   @override
@@ -21,7 +22,6 @@ class SplashScreen extends StatefulWidget {
 class StartState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startTime();
   }
@@ -51,7 +51,6 @@ class StartState extends State<SplashScreen> {
       await pref.initializePreference(userId);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

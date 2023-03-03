@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_flutter_fiap/screens/add_edit_screen.dart';
 import 'package:crud_flutter_fiap/screens/auth_screen.dart';
 import 'package:crud_flutter_fiap/screens/home/model/skill.model.dart';
 import 'package:crud_flutter_fiap/utils/security.utils.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String id = "/home_screen";
   const HomeScreen({super.key});
 
   @override
@@ -22,13 +24,13 @@ class StartState extends State<HomeScreen> {
   List<SkillModel> skillsData = [];
   String userId = '';
 
-  String profileImg = "https://avatars.githubusercontent.com/u/9452793?s=96&v=4";
+  String profileImg =
+      "https://avatars.githubusercontent.com/u/9452793?s=96&v=4";
   String userName = '';
   String userEmail = '';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUserData();
   }
@@ -47,9 +49,9 @@ class StartState extends State<HomeScreen> {
       await getUserId();
 
       final querySnapshot = await FirebaseFirestore.instance
-        .collection('Users')
-        .where('userId', isEqualTo: userId)
-        .get();
+          .collection('Users')
+          .where('userId', isEqualTo: userId)
+          .get();
 
       Map<String, dynamic> data = querySnapshot.docs[0].data();
       setState(() {
@@ -79,11 +81,10 @@ class StartState extends State<HomeScreen> {
         // Getting data from map
         Map<String, dynamic> data = doc.data();
         SkillModel m = SkillModel(
-          skill: data['skill'],
-          level: data['level'],
-          timeExperience: data['timeExperience'],
-          userId: data['userId']
-        );
+            skill: data['skill'],
+            level: data['level'],
+            timeExperience: data['timeExperience'],
+            userId: data['userId']);
         setState(() {
           skillsData.add(m);
         });
@@ -94,16 +95,14 @@ class StartState extends State<HomeScreen> {
   }
 
   Future<void> _onDeleteItemPressed(String userId, String skill) async {
-    final querySnapshot = await FirebaseFirestore.instance
-    .collection('Skills')
-    .where('userId', isEqualTo: userId)
-    .where('skill', isEqualTo: skill)
-    .get()
-    .then((value) => {
-      for(var doc in value.docs) {
-        doc.reference.delete()
-      }
-    });
+    await FirebaseFirestore.instance
+        .collection('Skills')
+        .where('userId', isEqualTo: userId)
+        .where('skill', isEqualTo: skill)
+        .get()
+        .then((value) => {
+              for (var doc in value.docs) {doc.reference.delete()}
+            });
 
     await getSkills();
   }
@@ -137,19 +136,21 @@ class StartState extends State<HomeScreen> {
         ), // 1
         title: Column(
           children: [
-            Text(userName, style: const TextStyle(
-                fontSize: 18.0,
-                color:Colors.white,
-                letterSpacing: 2.0,
-                fontWeight: FontWeight.w400
-              ),
+            Text(
+              userName,
+              style: const TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                  letterSpacing: 2.0,
+                  fontWeight: FontWeight.w400),
             ),
-            Text(userEmail, style: const TextStyle(
-                fontSize: 14.0,
-                color:Colors.white,
-                letterSpacing: 2.0,
-                fontWeight: FontWeight.w400
-              ),
+            Text(
+              userEmail,
+              style: const TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.white,
+                  letterSpacing: 2.0,
+                  fontWeight: FontWeight.w400),
             ),
           ],
         ), // 2
@@ -164,58 +165,64 @@ class StartState extends State<HomeScreen> {
         ],
       ),
       body: SafeArea(
-         child: ListView.separated(
-           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-           itemBuilder: (_, index) {
-             final skill = skillsData[index];
-             return Dismissible(
-               key: Key(skill.userId),
-               child: ListTile(
-                 leading: CircleAvatar(
-                   backgroundColor: const Color(0xffee4c83),
-                   child: Text((index + 1).toString()),
-                 ),
-                 title: Text('${skill.skill} | ${skill.level} level'),
-                 subtitle: Text('${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
-                 //trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
-                 trailing: Row(
-                   mainAxisSize: MainAxisSize.min,
-                   children: <Widget>[
-                     IconButton(
-                       icon: const Icon(
-                         Icons.edit,
-                         size: 20.0,
-                         color: Color(0xff2e2e2e),
-                       ),
-                       onPressed: () {
-                         //   _onDeleteItemPressed(index);
-                       },
-                     ),
-                     IconButton(
-                       icon: const Icon(
-                         Icons.delete,
-                         size: 20.0,
-                         color: Color(0xff2e2e2e),
-                       ),
-                       onPressed: () {
-                         _onDeleteItemPressed(skill.userId, skill.skill);
-                       },
-                     ),
-                   ],
-                 ),
-               ),
-             );
-           },
-           separatorBuilder: (_, __) => const Divider(),
-           itemCount: skillsData.length
-         ),
+        child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            itemBuilder: (_, index) {
+              final skill = skillsData[index];
+              return Dismissible(
+                key: Key(skill.userId),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: const Color(0xffee4c83),
+                    child: Text((index + 1).toString()),
+                  ),
+                  title: Text('${skill.skill} | ${skill.level} level'),
+                  subtitle: Text(
+                      '${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
+                  //trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                          size: 20.0,
+                          color: Color(0xff2e2e2e),
+                        ),
+                        onPressed: () {
+                          //   _onDeleteItemPressed(index);
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 20.0,
+                          color: Color(0xff2e2e2e),
+                        ),
+                        onPressed: () {
+                          _onDeleteItemPressed(skill.userId, skill.skill);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (_, __) => const Divider(),
+            itemCount: skillsData.length),
       ),
       floatingActionButton: FloatingActionButton.small(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddEditScreen(),
+              ));
+        },
         backgroundColor: const Color(0xff2e2e2e),
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation:    FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

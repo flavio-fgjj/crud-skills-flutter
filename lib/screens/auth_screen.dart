@@ -1,14 +1,12 @@
-import 'dart:io';
-
 import 'package:crud_flutter_fiap/screens/signup_screen.dart';
 import 'package:crud_flutter_fiap/utils/security.utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home/home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
+  static const String id = "/auth_screen";
   const AuthScreen({super.key});
 
   @override
@@ -132,7 +130,6 @@ class StartState extends State<AuthScreen> {
                 password = text;
               });
             },
-
           ),
         ),
         GestureDetector(
@@ -151,9 +148,9 @@ class StartState extends State<AuthScreen> {
               color: const Color(0xff2e2e2e),
               boxShadow: const [
                 BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
+                    offset: Offset(0, 10),
+                    blurRadius: 50,
+                    color: Color(0xffEEEEEE)),
               ],
             ),
             child: const Text(
