@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_flutter_fiap/screens/add_edit_screen.dart';
-import 'package:crud_flutter_fiap/screens/auth_screen.dart';
 import 'package:crud_flutter_fiap/screens/home/model/skill.model.dart';
-import 'package:crud_flutter_fiap/utils/security.utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:crud_flutter_fiap/utils/security_util.dart';
 import 'package:flutter/material.dart';
+
+import '../../services/logout_service.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = "/home_screen";
@@ -20,7 +20,6 @@ class StartState extends State<HomeScreen> {
     return initWidget();
   }
 
-  //List<Map<String, dynamic>> skillsData = [];
   List<SkillModel> skillsData = [];
   String userId = '';
 
@@ -81,10 +80,13 @@ class StartState extends State<HomeScreen> {
         // Getting data from map
         Map<String, dynamic> data = doc.data();
         SkillModel m = SkillModel(
+            id: doc.id,
             skill: data['skill'],
             level: data['level'],
             timeExperience: data['timeExperience'],
-            userId: data['userId']);
+            userId: data['userId']
+        );
+
         setState(() {
           skillsData.add(m);
         });
@@ -94,27 +96,20 @@ class StartState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _onDeleteItemPressed(String userId, String skill) async {
+  Future<void> _onDeleteItemPressed(String id) async {
     await FirebaseFirestore.instance
-        .collection('Skills')
-        .where('userId', isEqualTo: userId)
-        .where('skill', isEqualTo: skill)
-        .get()
-        .then((value) => {
-              for (var doc in value.docs) {doc.reference.delete()}
-            });
+      .collection('Skills').doc(id).delete();
+      // .collection('Skills')
+      // .where('userId', isEqualTo: userId)
+      // .where('skill', isEqualTo: skill)
+      // .get()
+      // .then((value) => {
+      //       for (var doc in value.docs) {doc.reference.delete()}
+      //     });
 
     await getSkills();
   }
   //#endregion
-
-  doLogout(BuildContext context) async {
-    final navigator = Navigator.of(context);
-    await FirebaseAuth.instance.signOut();
-    navigator.push(MaterialPageRoute(
-      builder: (context) => const AuthScreen(),
-    ));
-  }
 
   initWidget() {
     return Scaffold(
@@ -159,7 +154,8 @@ class StartState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              doLogout(context);
+              LogoutService(context);
+              //_doLogout(context);
             }, // omitting onPressed makes the button disabled
           )
         ],
@@ -170,7 +166,7 @@ class StartState extends State<HomeScreen> {
             itemBuilder: (_, index) {
               final skill = skillsData[index];
               return Dismissible(
-                key: Key(skill.userId),
+                key: Key(skill.id),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: const Color(0xffee4c83),
@@ -190,7 +186,12 @@ class StartState extends State<HomeScreen> {
                           color: Color(0xff2e2e2e),
                         ),
                         onPressed: () {
-                          //   _onDeleteItemPressed(index);
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddEditScreen(idCollection: skill.id),
+                              ));
                         },
                       ),
                       IconButton(
@@ -200,7 +201,7 @@ class StartState extends State<HomeScreen> {
                           color: Color(0xff2e2e2e),
                         ),
                         onPressed: () {
-                          _onDeleteItemPressed(skill.userId, skill.skill);
+                          _onDeleteItemPressed(skill.id);
                         },
                       ),
                     ],
@@ -213,10 +214,11 @@ class StartState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
+          Navigator.pop(context);
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddEditScreen(),
+                builder: (context) => const AddEditScreen(idCollection: "_"),
               ));
         },
         backgroundColor: const Color(0xff2e2e2e),

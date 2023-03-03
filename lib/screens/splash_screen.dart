@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:crud_flutter_fiap/utils/security.utils.dart';
+import 'package:crud_flutter_fiap/utils/security_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

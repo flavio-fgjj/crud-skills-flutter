@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crud_flutter_fiap/screens/auth_screen.dart';
-import 'package:crud_flutter_fiap/utils/security.utils.dart';
+import 'package:crud_flutter_fiap/screens/home/home_screen.dart';
+import 'package:crud_flutter_fiap/utils/security_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddEditScreen extends StatefulWidget {
   static const String id = "/addedit_screen";
-  const AddEditScreen({super.key});
+
+  const AddEditScreen({
+    super.key,
+    required this.idCollection
+  });
+
+  final String idCollection;
 
   @override
   State<StatefulWidget> createState() => StartState();
@@ -26,6 +32,8 @@ class StartState extends State<AddEditScreen> {
   String profileImg =
       "https://avatars.githubusercontent.com/u/9452793?s=96&v=4";
 
+  var document;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +41,7 @@ class StartState extends State<AddEditScreen> {
     getSkill();
   }
 
-  //#region Futures
+  //#regionFutures
   Future<void> getUserId() async {
     SecurityPreferences pref = SecurityPreferences();
     String uId = await pref.getUserId();
@@ -42,30 +50,25 @@ class StartState extends State<AddEditScreen> {
     });
   }
 
-  getSkill() async {
+  Future<dynamic> getSkill() async {
     try {
-      var document = await FirebaseFirestore.instance
-          .collection('Skills')
-          .doc('BCdzmmEgl4MeIsfbgEu4')
-          .get();
+      if (widget.idCollection != "_") {
+        document = await FirebaseFirestore.instance
+            .collection('Skills')
+            .doc(widget.idCollection)
+            .get();
 
-      if (document.exists) {
-        skillController.text = document.data()?['skill'];
-        levelController.text = document.data()?['level'];
-        timeExperienceController.text = document.data()?['timeExperience'];
+        if (document.exists) {
+          skillController.text = document.data()?['skill'];
+          levelController.text = document.data()?['level'];
+          timeExperienceController.text = document.data()?['timeExperience'];
+        }
       }
     } catch (e) {
       return null;
     }
   }
-
-  doLogout(BuildContext context) async {
-    final navigator = Navigator.of(context);
-    await FirebaseAuth.instance.signOut();
-    navigator.push(MaterialPageRoute(
-      builder: (context) => const AuthScreen(),
-    ));
-  }
+  //#endregion
 
   initWidget() {
     return Scaffold(
@@ -74,7 +77,7 @@ class StartState extends State<AddEditScreen> {
           title: Column(
             children: [
               Text(
-                id != '' ? "Editar" : "Adicionar",
+                widget.idCollection != '_' ? "Editar" : "Adicionar",
                 style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.white,
@@ -89,7 +92,7 @@ class StartState extends State<AddEditScreen> {
           children: [
             const SizedBox(height: 24),
             CircleAvatar(
-              radius: 100,
+              radius: 60.0,
               backgroundImage: NetworkImage(profileImg),
             ),
             const SizedBox(height: 24),
@@ -191,7 +194,38 @@ class StartState extends State<AddEditScreen> {
                   ],
                 ),
                 child: Text(
-                  id != '' ? "Editar" : "Salvar",
+                  widget.idCollection != '_' ? "Editar" : "Salvar",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                final navigator = Navigator.of(context);
+                navigator.pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                height: 54,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: const Color(0xffee4c83),
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
+                ),
+                child: const Text(
+                  "Cancelar",
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -211,16 +245,21 @@ class StartState extends State<AddEditScreen> {
         "userId": userId,
       };
 
-      if (id != '') {
+      if (widget.idCollection != '_' && document != null) {
         FirebaseFirestore.instance
             .collection("Skills")
-            .doc(id)
+            .doc(widget.idCollection)
             .update(skillToSave);
       } else {
         FirebaseFirestore.instance.collection("Skills").add(skillToSave);
       }
 
       navigator.pop();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
     } on FirebaseAuthException catch (_) {
       var snackBar = const SnackBar(
         content: Text("Problemas ao salvar! Tente novamente!"),
