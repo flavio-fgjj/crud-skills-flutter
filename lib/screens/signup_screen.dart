@@ -24,10 +24,10 @@ class InitState extends State<SignUpScreen> {
 
   Widget initWidget() {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Column(
-      children: [
-        Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
           height: 200,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90)),
@@ -62,7 +62,7 @@ class InitState extends State<SignUpScreen> {
             ],
           )),
         ),
-        Container(
+            Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -95,7 +95,7 @@ class InitState extends State<SignUpScreen> {
             },
           ),
         ),
-        Container(
+            Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -129,7 +129,7 @@ class InitState extends State<SignUpScreen> {
             },
           ),
         ),
-        Container(
+            Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -163,7 +163,7 @@ class InitState extends State<SignUpScreen> {
             },
           ),
         ),
-        Container(
+            Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -196,7 +196,7 @@ class InitState extends State<SignUpScreen> {
             },
           ),
         ),
-        Container(
+            Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -230,14 +230,14 @@ class InitState extends State<SignUpScreen> {
             },
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            // Write Click Listener Code Here.
-            doSignup(context);
-          },
-          child: const RoundedButton(color: Color(0xff2e2e2e), text: "CRIAR CONTA"),
-        ),
-        Container(
+            GestureDetector(
+              onTap: () {
+                // Write Click Listener Code Here.
+                doSignup(context);
+              },
+              child: const RoundedButton(color: Color(0xff2e2e2e), text: "CRIAR CONTA"),
+            ),
+            Container(
           margin: const EdgeInsets.only(top: 10, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -256,8 +256,10 @@ class InitState extends State<SignUpScreen> {
             ],
           ),
         )
-      ],
-    )));
+          ],
+        )
+      )
+    );
   }
 
   doSignup(BuildContext context) async {
