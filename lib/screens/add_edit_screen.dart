@@ -165,7 +165,7 @@ class StartState extends State<AddEditScreen> {
                       color: Color(0xffEEEEEE)),
                 ],
               ),
-              child: TextField(
+              child: TextFormField(
                 controller: timeExperienceController,
                 cursorColor: const Color(0xff2e2e2e),
                 decoration: const InputDecoration(
@@ -174,12 +174,13 @@ class StartState extends State<AddEditScreen> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
+                validator: _validateTimeExperience,
+                onSaved: (String? val) {
+                  timeExperienceController.text = val ?? "";
+                },
               ),
             ),
-            const SizedBox(
-              height: 16,
-              width: double.infinity,
-            ),
+            const SizedBox(height: 16, width: double.infinity),
             GestureDetector(
               onTap: () {
                 save(context);
@@ -200,6 +201,17 @@ class StartState extends State<AddEditScreen> {
             ),
           ],
         )));
+  }
+
+  String? _validateTimeExperience(String? value) {
+    String pat = r'(^[0-9]*$)';
+    RegExp regExp = RegExp(pat);
+    if (value != null) {
+      return "Informe o tempo de experiência";
+    } else if (value != null && !regExp.hasMatch(value)) {
+      return "O campo deve conter caracteres numericos";
+    }
+    return null;
   }
 
   void save(BuildContext context) {
