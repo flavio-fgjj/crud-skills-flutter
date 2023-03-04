@@ -1,16 +1,25 @@
-# crud_flutter_fiap
+# Completion of course work
 
-Projeto final do modulo de Flutter da FIAP.
+FIAP - MBA em Mobile Development - Apps, IOT, Chatbots & Virtual Assistants
+
+## Description
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Dependencies
 
-A few resources to get you started if this is your first Flutter project:
+## Authors
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### [André](https://github.com/AndCordeiro)
+#### [Danilo](https://www.linkedin.com/in/danilopsnts)
+#### [Flávio](https://github.com/flavio-fgjj)
+#### [Samuel](https://github.com/SamuelDevMobile)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Contributing
+
+Please read [CONTRIBUTING](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+## License
+
+This project is licensed under the MT License - see the [LICENSE](LICENSE.md) file for details
+
+## Acknowledgments
