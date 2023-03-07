@@ -17,12 +17,6 @@ class InitState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) => initWidget();
 
-  String name = '';
-  String phone = '';
-  String profilePicture = '';
-  String email = '';
-  String password = '';
-
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final profilePictureController = TextEditingController();
@@ -150,10 +144,10 @@ class InitState extends State<SignUpScreen> {
     try {
       final navigator = Navigator.of(context);
       final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
       var db = FirebaseFirestore.instance;
 
       final user = <String, String?>{
