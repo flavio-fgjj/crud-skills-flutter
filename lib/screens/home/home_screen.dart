@@ -23,8 +23,7 @@ class StartState extends State<HomeScreen> {
   List<SkillModel> skillsData = [];
   String userId = '';
 
-  String profileImg =
-      "https://avatars.githubusercontent.com/u/9452793?s=96&v=4";
+  String profileImg = "";
   String userName = '';
   String userEmail = '';
 
@@ -99,13 +98,6 @@ class StartState extends State<HomeScreen> {
   Future<void> _onDeleteItemPressed(String id) async {
     await FirebaseFirestore.instance
       .collection('Skills').doc(id).delete();
-      // .collection('Skills')
-      // .where('userId', isEqualTo: userId)
-      // .where('skill', isEqualTo: skill)
-      // .get()
-      // .then((value) => {
-      //       for (var doc in value.docs) {doc.reference.delete()}
-      //     });
 
     await getSkills();
   }
@@ -183,7 +175,7 @@ class StartState extends State<HomeScreen> {
                         icon: const Icon(
                           Icons.edit,
                           size: 20.0,
-                          color: Color(0xff2e2e2e),
+                          color: Colors.indigo,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -198,7 +190,7 @@ class StartState extends State<HomeScreen> {
                         icon: const Icon(
                           Icons.delete,
                           size: 20.0,
-                          color: Color(0xff2e2e2e),
+                          color: Colors.red,
                         ),
                         onPressed: () {
                           _onDeleteItemPressed(skill.id);

@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_flutter_fiap/screens/home/home_screen.dart';
 import 'package:crud_flutter_fiap/utils/security_util.dart';
+import 'package:crud_flutter_fiap/widgets/rounded_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/rounded_button.dart';
+import '../widgets/rounded_dropdown.dart';
 
 class AddEditScreen extends StatefulWidget {
   static const String id = "/addedit_screen";
@@ -27,20 +29,33 @@ class StartState extends State<AddEditScreen> {
   }
 
   final skillController = TextEditingController();
-  final levelController = TextEditingController();
-  final timeExperienceController = TextEditingController();
+
   String id = "";
   String userId = '';
-  String profileImg =
-      "https://avatars.githubusercontent.com/u/9452793?s=96&v=4";
+  String profileImg = "";
 
-  var document;
+  String level = " ";
+  String timeExperience = " ";
+
+  final List<String> _levelValues = [
+    "High",
+    "Medium",
+    "Low"
+  ];
+
+  final List<String> _timeExperienceValues = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5+"
+  ];
 
   @override
   void initState() {
     super.initState();
     getUserId();
-    getSkill();
+    getUserData();
   }
 
   //#regionFutures
@@ -55,19 +70,39 @@ class StartState extends State<AddEditScreen> {
   Future<dynamic> getSkill() async {
     try {
       if (widget.idCollection != "_") {
-        document = await FirebaseFirestore.instance
+        final document = await FirebaseFirestore.instance
             .collection('Skills')
             .doc(widget.idCollection)
             .get();
 
         if (document.exists) {
           skillController.text = document.data()?['skill'];
-          levelController.text = document.data()?['level'];
-          timeExperienceController.text = document.data()?['timeExperience'];
+          level = document.data()?['level'];
+          timeExperience = document.data()?['timeExperience'];
         }
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<dynamic> getUserData() async {
+    try {
+      await getUserId();
+
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      Map<String, dynamic> data = querySnapshot.docs[0].data();
+      setState(() {
+        profileImg = data['profilePicture'].toString();
+      });
+
+      await getSkill();
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
   //#endregion
@@ -98,92 +133,21 @@ class StartState extends State<AddEditScreen> {
               backgroundImage: NetworkImage(profileImg),
             ),
             const SizedBox(height: 24),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              height: 54,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: const Color(0xffEEEEEE),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 20),
-                      blurRadius: 100,
-                      color: Color(0xffEEEEEE)),
-                ],
+            RoundedTextField(
+              hint: 'Skill',
+              textController: skillController,
+              icon: const Icon(
+                Icons.military_tech,
+                color: Color(0xff2e2e2e),
               ),
-              child: TextField(
-                controller: skillController,
-                cursorColor: const Color(0xff2e2e2e),
-                decoration: const InputDecoration(
-                  focusColor: Color(0xff2e2e2e),
-                  hintText: "Skill",
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-              ),
+              obscureText: false,
             ),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              height: 54,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: const Color(0xffEEEEEE),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 20),
-                      blurRadius: 100,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              child: TextField(
-                controller: levelController,
-                cursorColor: const Color(0xff2e2e2e),
-                decoration: const InputDecoration(
-                  focusColor: Color(0xff2e2e2e),
-                  hintText: "Level",
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              height: 54,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: const Color(0xffEEEEEE),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 20),
-                      blurRadius: 100,
-                      color: Color(0xffEEEEEE)),
-                ],
-              ),
-              child: TextFormField(
-                controller: timeExperienceController,
-                cursorColor: const Color(0xff2e2e2e),
-                decoration: const InputDecoration(
-                  focusColor: Color(0xff2e2e2e),
-                  hintText: "Tempo de experiencia",
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-                validator: _validateTimeExperience,
-                onSaved: (String? val) {
-                  timeExperienceController.text = val ?? "";
-                },
-              ),
-            ),
+            RoundedDropdown(hint: const Text("Level"), listValues: _levelValues, newValue: level,),
+            RoundedDropdown(hint: const Text("Tempo de experiência"), listValues: _timeExperienceValues, newValue: timeExperience,),
             const SizedBox(height: 16, width: double.infinity),
             GestureDetector(
               onTap: () {
-                save(context);
+                onSave(context);
               },
               child: RoundedButton(color: const Color(0xff2e2e2e), text: widget.idCollection != '_' ? "Editar" : "Salvar"),
             ),
@@ -203,43 +167,49 @@ class StartState extends State<AddEditScreen> {
         )));
   }
 
-  String? _validateTimeExperience(String? value) {
-    String pat = r'(^[0-9]*$)';
-    RegExp regExp = RegExp(pat);
-    if (value != null) {
-      return "Informe o tempo de experiência";
-    } else if (value != null && !regExp.hasMatch(value)) {
-      return "O campo deve conter caracteres numericos";
+  bool validateFields() {
+    if (skillController.text.isEmpty || level.isEmpty || timeExperience.isEmpty) {
+      return false;
     }
-    return null;
+
+    return true;
   }
-
-  void save(BuildContext context) {
-    try {
+  void onSave(BuildContext context) {
+    if (validateFields()) {
+      save();
       final navigator = Navigator.of(context);
-
-      final skillToSave = <String, String?>{
-        "skill": skillController.text,
-        "level": levelController.text,
-        "timeExperience": timeExperienceController.text,
-        "userId": userId,
-      };
-
-      if (widget.idCollection != '_' && document != null) {
-        FirebaseFirestore.instance
-            .collection("Skills")
-            .doc(widget.idCollection)
-            .update(skillToSave);
-      } else {
-        FirebaseFirestore.instance.collection("Skills").add(skillToSave);
-      }
-
       navigator.pop();
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const HomeScreen(),
           ));
+    } else {
+      var snackBar = const SnackBar(
+        content: Text("Todos os campos devem ser preenchidos"),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  Future<void> save() async {
+    try {
+      final skillToSave = <String, String?>{
+        "skill": skillController.text,
+        "level": level,
+        "timeExperience": timeExperience,
+        "userId": userId,
+      };
+
+      if (widget.idCollection != '_') {
+        await FirebaseFirestore.instance
+            .collection("Skills")
+            .doc(widget.idCollection)
+            .update(skillToSave);
+      } else {
+        await FirebaseFirestore.instance.collection("Skills").add(skillToSave);
+      }
     } on FirebaseAuthException catch (_) {
       var snackBar = const SnackBar(
         content: Text("Problemas ao salvar! Tente novamente!"),
@@ -248,4 +218,5 @@ class StartState extends State<AddEditScreen> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
+
 }

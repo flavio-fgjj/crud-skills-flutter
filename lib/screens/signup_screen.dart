@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/rounded_button.dart';
+import '../widgets/rounded_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = "/signup_screen";
@@ -21,6 +22,12 @@ class InitState extends State<SignUpScreen> {
   String profilePicture = '';
   String email = '';
   String password = '';
+
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final profilePictureController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Widget initWidget() {
     return Scaffold(
@@ -62,182 +69,59 @@ class InitState extends State<SignUpScreen> {
             ],
           )),
         ),
-            Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 35,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
-            ],
+        RoundedTextField(
+          hint: 'Nome completo',
+          textController: nameController,
+          icon: const Icon(
+            Icons.person,
+            color: Color(0xff2e2e2e),
           ),
-          child: TextField(
-            cursorColor: const Color(0xff2e2e2e),
-            decoration: const InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: Color(0xff2e2e2e),
-              ),
-              hintText: "Nome Completo",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            onChanged: (text) {
-              setState(() {
-                name = text;
-              });
-            },
-          ),
+          obscureText: false,
         ),
-            Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: const Color(0xffEEEEEE),
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 20),
-                  blurRadius: 100,
-                  color: Color(0xffEEEEEE)),
-            ],
+        RoundedTextField(
+          hint: 'Telefone',
+          textController: phoneController,
+          icon: const Icon(
+            Icons.phone,
+            color: Color(0xff2e2e2e),
           ),
-          child: TextField(
-            cursorColor: const Color(0xff2e2e2e),
-            decoration: const InputDecoration(
-              focusColor: Color(0xff2e2e2e),
-              icon: Icon(
-                Icons.phone,
-                color: Color(0xff2e2e2e),
-              ),
-              hintText: "Telefone",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            onChanged: (text) {
-              setState(() {
-                phone = text;
-              });
-            },
-          ),
+          obscureText: false,
         ),
-            Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: const Color(0xffEEEEEE),
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 20),
-                  blurRadius: 100,
-                  color: Color(0xffEEEEEE)),
-            ],
+        RoundedTextField(
+          hint: 'Url profile (imagem)',
+          textController: profilePictureController,
+          icon: const Icon(
+            Icons.image,
+            color: Color(0xff2e2e2e),
           ),
-          child: TextField(
-            cursorColor: const Color(0xff2e2e2e),
-            decoration: const InputDecoration(
-              focusColor: Color(0xff2e2e2e),
-              icon: Icon(
-                Icons.person,
-                color: Color(0xff2e2e2e),
-              ),
-              hintText: "Url do Profile (imagem)",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            onChanged: (text) {
-              setState(() {
-                profilePicture = text;
-              });
-            },
-          ),
+          obscureText: false,
         ),
-            Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
-            ],
+        RoundedTextField(
+          hint: 'Email',
+          textController: emailController,
+          icon: const Icon(
+            Icons.email,
+            color: Color(0xff2e2e2e),
           ),
-          child: TextField(
-            cursorColor: const Color(0xff2e2e2e),
-            decoration: const InputDecoration(
-              icon: Icon(
-                Icons.email,
-                color: Color(0xff2e2e2e),
-              ),
-              hintText: "Email",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            onChanged: (text) {
-              setState(() {
-                email = text;
-              });
-            },
-          ),
+          obscureText: false,
         ),
-            Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: const Color(0xffEEEEEE),
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 20),
-                  blurRadius: 100,
-                  color: Color(0xffEEEEEE)),
-            ],
+        RoundedTextField(
+          hint: 'Senha',
+          textController: passwordController,
+          icon: const Icon(
+            Icons.vpn_key,
+            color: Color(0xff2e2e2e),
           ),
-          child: TextField(
-            cursorColor: const Color(0xff2e2e2e),
-            decoration: const InputDecoration(
-              focusColor: Color(0xff2e2e2e),
-              icon: Icon(
-                Icons.vpn_key,
-                color: Color(0xff2e2e2e),
-              ),
-              hintText: "Senha",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            onChanged: (text) {
-              setState(() {
-                password = text;
-              });
-            },
-          ),
+          obscureText: true,
         ),
-            GestureDetector(
-              onTap: () {
-                // Write Click Listener Code Here.
-                doSignup(context);
-              },
-              child: const RoundedButton(color: Color(0xff2e2e2e), text: "CRIAR CONTA"),
-            ),
-            Container(
+        GestureDetector(
+          onTap: () {
+            // Write Click Listener Code Here.
+            doSignup(context);
+          },
+          child: const RoundedButton(color: Color(0xff2e2e2e), text: "CRIAR CONTA"),
+        ),
+        Container(
           margin: const EdgeInsets.only(top: 10, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -273,18 +157,19 @@ class InitState extends State<SignUpScreen> {
       var db = FirebaseFirestore.instance;
 
       final user = <String, String?>{
-        "name": name,
-        "phone": phone,
-        "profilePicture": profilePicture,
-        "email": email,
+        "name": nameController.text,
+        "phone": phoneController.text,
+        "profilePicture": profilePictureController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
         "userId": credential.user?.uid,
       };
 
       db
-          .collection("Users")
-          .doc(credential.user?.uid)
-          .set(user)
-          .onError((e, _) => debugPrint("Error writing document: $e"));
+        .collection("Users")
+        .doc(credential.user?.uid)
+        .set(user)
+        .onError((e, _) => debugPrint("Error writing document: $e"));
 
       navigator.pop();
     } on FirebaseAuthException catch (e) {
