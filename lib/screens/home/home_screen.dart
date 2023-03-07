@@ -182,7 +182,7 @@ class StartState extends State<HomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddEditScreen(idCollection: skill.id),
+                                builder: (context) => AddEditScreen(idCollection: skill.id, level: skill.level, timeExperience: skill.timeExperience, skill: skill.skill,),
                               ));
                         },
                       ),
@@ -210,7 +210,7 @@ class StartState extends State<HomeScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddEditScreen(idCollection: "_"),
+                builder: (context) => AddEditScreen(idCollection: "_", level: '', timeExperience: '', skill: ''),
               ));
         },
         backgroundColor: const Color(0xff2e2e2e),

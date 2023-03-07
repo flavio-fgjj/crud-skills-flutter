@@ -11,31 +11,29 @@ import '../widgets/rounded_dropdown.dart';
 class AddEditScreen extends StatefulWidget {
   static const String id = "/addedit_screen";
 
-  const AddEditScreen({
+  AddEditScreen({
     super.key,
-    required this.idCollection
+    required this.idCollection,
+    required this.level,
+    required this.timeExperience,
+    required this.skill
   });
 
   final String idCollection;
+  String? level;
+  String? timeExperience;
+  String skill;
 
   @override
   State<StatefulWidget> createState() => StartState();
 }
 
 class StartState extends State<AddEditScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return initWidget();
-  }
-
   final skillController = TextEditingController();
 
   String id = "";
   String userId = '';
   String profileImg = "";
-
-  String level = " ";
-  String timeExperience = " ";
 
   final List<String> _levelValues = [
     "High",
@@ -53,9 +51,16 @@ class StartState extends State<AddEditScreen> {
 
   @override
   void initState() {
-    super.initState();
     getUserId();
     getUserData();
+    if (widget.idCollection != '_') {
+      skillController.text = widget.skill;
+    } else {
+      widget.level = _levelValues[0];
+      widget.timeExperience = _timeExperienceValues[0];
+      widget.skill = "";
+    }
+    super.initState();
   }
 
   //#regionFutures
@@ -76,9 +81,9 @@ class StartState extends State<AddEditScreen> {
             .get();
 
         if (document.exists) {
-          skillController.text = document.data()?['skill'];
-          level = document.data()?['level'];
-          timeExperience = document.data()?['timeExperience'];
+          widget.skill = document.data()?['skill'];
+          widget.level = document.data()?['level'];
+          widget.timeExperience = document.data()?['timeExperience'];
         }
       }
     } catch (e) {
@@ -106,6 +111,11 @@ class StartState extends State<AddEditScreen> {
     }
   }
   //#endregion
+
+  @override
+  Widget build(BuildContext context) {
+    return initWidget();
+  }
 
   initWidget() {
     return Scaffold(
@@ -142,8 +152,64 @@ class StartState extends State<AddEditScreen> {
               ),
               obscureText: false,
             ),
-            RoundedDropdown(hint: const Text("Level"), listValues: _levelValues, newValue: level,),
-            RoundedDropdown(hint: const Text("Tempo de experiência"), listValues: _timeExperienceValues, newValue: timeExperience,),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              height: 54,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueGrey),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(6),
+                  isExpanded: true,
+                  value: widget.level,
+                  items: _levelValues.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: const Text("Level"),
+                  onChanged: (String? value) {
+                    setState(() {
+                      widget.level = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              height: 54,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueGrey),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(6),
+                  isExpanded: true,
+                  value: widget.timeExperience,
+                  items: _timeExperienceValues.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: const Text("Tempo de experiência"),
+                  onChanged: (String? value) {
+                    setState(() {
+                      widget.timeExperience = value;
+                    });
+                  },
+                ),
+              ),
+            ),
             const SizedBox(height: 16, width: double.infinity),
             GestureDetector(
               onTap: () {
@@ -168,7 +234,7 @@ class StartState extends State<AddEditScreen> {
   }
 
   bool validateFields() {
-    if (skillController.text.isEmpty || level.isEmpty || timeExperience.isEmpty) {
+    if (skillController.text.isEmpty || widget.level == null || widget.timeExperience == null) {
       return false;
     }
 
@@ -197,8 +263,8 @@ class StartState extends State<AddEditScreen> {
     try {
       final skillToSave = <String, String?>{
         "skill": skillController.text,
-        "level": level,
-        "timeExperience": timeExperience,
+        "level": widget.level,
+        "timeExperience": widget.timeExperience,
         "userId": userId,
       };
 

@@ -10,7 +10,7 @@ class RoundedDropdown extends StatelessWidget {
   });
 
   final Text hint;
-  late final String newValue;
+  late String? newValue;
   final List<String> listValues;
 
   @override
@@ -28,6 +28,7 @@ class RoundedDropdown extends StatelessWidget {
         child: DropdownButton<String>(
           borderRadius: BorderRadius.circular(6),
           isExpanded: true,
+          //value: newValue,
           items: listValues.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -35,8 +36,8 @@ class RoundedDropdown extends StatelessWidget {
             );
           }).toList(),
           hint: hint,
-          onChanged: (value) {
-            newValue = value ?? "";
+          onChanged: (String? value) {
+            newValue = value;
           },
         ),
       ),
