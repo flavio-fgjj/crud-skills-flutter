@@ -53,3 +53,14 @@ Signup
 
 ![image](https://user-images.githubusercontent.com/9452793/223853130-f2c509bc-68df-4fd6-a943-26cbc985400e.png)
 
+Home
+
+![image](https://user-images.githubusercontent.com/9452793/223856460-57a12915-983f-4eed-9662-dc636f858370.png)
+
+Add 
+
+![image](https://user-images.githubusercontent.com/9452793/223856548-be6d4c33-6761-4184-b4d3-a1eb675a0552.png)
+
+Edit
+
+![image](https://user-images.githubusercontent.com/9452793/223856630-680981bb-3839-45dc-9573-4ed2978e9ad4.png)
