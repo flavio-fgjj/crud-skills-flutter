@@ -151,6 +151,7 @@ class StartState extends State<AddEditScreen> {
                 color: Color(0xff2e2e2e),
               ),
               obscureText: false,
+              maskType: 'none',
             ),
             Container(
               alignment: Alignment.center,

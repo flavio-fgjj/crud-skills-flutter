@@ -40,6 +40,8 @@ dependencies:
 
   shared_preferences: ^2.0.18
   firebase_database: ^9.1.7
+
+  mask_text_input_formatter: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

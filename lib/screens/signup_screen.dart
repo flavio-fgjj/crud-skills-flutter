@@ -71,6 +71,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
+          maskType: 'none',
         ),
         RoundedTextField(
           hint: 'Telefone',
@@ -80,6 +81,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
+          maskType: 'phone',
         ),
         RoundedTextField(
           hint: 'Url profile (imagem)',
@@ -89,6 +91,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
+          maskType: 'none',
         ),
         RoundedTextField(
           hint: 'Email',
@@ -98,6 +101,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
+          maskType: 'none',
         ),
         RoundedTextField(
           hint: 'Senha',
@@ -107,6 +111,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: true,
+          maskType: 'none',
         ),
         GestureDetector(
           onTap: () {
