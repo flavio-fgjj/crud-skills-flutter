@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import '../widgets/rounded_button.dart';
 import '../widgets/rounded_text_field.dart';
 
@@ -22,6 +25,39 @@ class InitState extends State<SignUpScreen> {
   final profilePictureController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  late final String profileImagePicker;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _onImageButtonPressed(ImageSource source, {BuildContext? context, }) async {
+
+
+    try {
+      final XFile? pickedFile = await _picker.pickImage(
+        source: source,
+        maxWidth: 100,
+        maxHeight: 100,
+        imageQuality: 100,
+      );
+
+      File file = File(pickedFile!.path);
+
+      List<int> imageBytes = file.readAsBytesSync();
+      String base64Image = base64Encode(imageBytes);
+      profileImagePicker = base64Image;
+      setState(() {
+        // _setImageFileListFromFile(pickedFile);
+      });
+      // print(base64Image);
+      Navigator.of(context!).pop();
+    } catch (e) {
+      setState(() {
+        // _pickImageError = e;
+      });
+    }
+  }
+
+
 
   Widget initWidget() {
     return Scaffold(
@@ -83,6 +119,44 @@ class InitState extends State<SignUpScreen> {
           obscureText: false,
           maskType: 'phone',
         ),
+            ElevatedButton(
+              child: const Text('showModalBottomSheet'),
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 200,
+                      color: Colors.white,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Pegar imagem'),
+                              onPressed: () => {
+                              _onImageButtonPressed(ImageSource.gallery, context: context)
+                              },
+                            ),
+                            ElevatedButton(
+                              child: const Text('Camera'),
+                              onPressed: () => {
+                                _onImageButtonPressed(ImageSource.camera, context: context)
+                              },
+                            ),
+                            ElevatedButton(
+                              child: const Text('Close BottomSheet'),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
         RoundedTextField(
           hint: 'Url profile (imagem)',
           textController: profilePictureController,
@@ -158,7 +232,7 @@ class InitState extends State<SignUpScreen> {
       final user = <String, String?>{
         "name": nameController.text,
         "phone": phoneController.text,
-        "profilePicture": profilePictureController.text,
+        "profilePicture": profileImagePicker,
         "email": emailController.text,
         "password": passwordController.text,
         "userId": credential.user?.uid,
