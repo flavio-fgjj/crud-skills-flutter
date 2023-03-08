@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import '../utils/mask_enum_util.dart';
+
 class RoundedTextField extends StatelessWidget {
 
   RoundedTextField({
@@ -18,22 +20,22 @@ class RoundedTextField extends StatelessWidget {
   final TextEditingController textController;
   final Icon icon;
   final bool obscureText;
-  final String maskType;
+  final MaskCustomType maskType;
 
   var maskInputFormatter = MaskTextInputFormatter();
 
   @override
   Widget build(BuildContext context) {
     switch (maskType) {
-      case "phone":
+      case MaskCustomType.none:
+        maskInputFormatter = MaskTextInputFormatter();
+        break;
+      case MaskCustomType.phone:
         maskInputFormatter = MaskTextInputFormatter(
             mask: '+55 (##) #####-####',
             filter: { "#": RegExp(r'[0-9]') },
             type: MaskAutoCompletionType.lazy
         );
-        break;
-      case "none":
-        maskInputFormatter = MaskTextInputFormatter();
         break;
     }
 

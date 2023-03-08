@@ -8,6 +8,7 @@ import 'package:crud_flutter_fiap/widgets/rounded_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/mask_enum_util.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/rounded_dropdown.dart';
 
@@ -159,7 +160,7 @@ class StartState extends State<AddEditScreen> {
                 color: Color(0xff2e2e2e),
               ),
               obscureText: false,
-              maskType: 'none',
+              maskType: MaskCustomType.none,
             ),
             Container(
               alignment: Alignment.center,

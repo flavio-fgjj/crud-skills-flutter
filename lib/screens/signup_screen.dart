@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_flutter_fiap/utils/mask_enum_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -107,7 +108,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
-          maskType: 'none',
+          maskType: MaskCustomType.none,
         ),
         RoundedTextField(
           hint: 'Telefone',
@@ -117,7 +118,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
-          maskType: 'phone',
+          maskType: MaskCustomType.phone,
         ),
             ElevatedButton(
               child: const Text('showModalBottomSheet'),
@@ -165,7 +166,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
-          maskType: 'none',
+          maskType: MaskCustomType.none,
         ),
         RoundedTextField(
           hint: 'Email',
@@ -175,7 +176,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: false,
-          maskType: 'none',
+          maskType: MaskCustomType.none,
         ),
         RoundedTextField(
           hint: 'Senha',
@@ -185,7 +186,7 @@ class InitState extends State<SignUpScreen> {
             color: Color(0xff2e2e2e),
           ),
           obscureText: true,
-          maskType: 'none',
+          maskType: MaskCustomType.none,
         ),
         GestureDetector(
           onTap: () {
