@@ -232,15 +232,17 @@ class StartState extends State<AddEditScreen> {
                 final navigator = Navigator.of(context);
                 navigator.pop();
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ));
               },
               child: const RoundedButton(color: Color(0xffee4c83), text: "Cancelar"),
             ),
           ],
-        )));
+        )
+      )
+    );
   }
 
   bool validateFields() {
