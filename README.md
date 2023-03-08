@@ -38,3 +38,18 @@ Após fazer clone do projeto...
 * [Firebase](https://firebase.google.com/?hl=pt-br)
 * [Android Studio](https://developer.android.com/studio)
 * [Visual Studio Code](https://code.visualstudio.com/)
+
+## 🖥️ Telas
+
+Splash
+
+![image](https://user-images.githubusercontent.com/9452793/223852000-58ee49a3-ca8b-45d3-9b4a-657252d34c89.png)
+
+Login
+
+![image](https://user-images.githubusercontent.com/9452793/223851628-66136e1c-0f02-41d4-a04a-2030d198e550.png)
+
+Signup
+
+![image](https://user-images.githubusercontent.com/9452793/223853130-f2c509bc-68df-4fd6-a943-26cbc985400e.png)
+
