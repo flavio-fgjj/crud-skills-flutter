@@ -36,6 +36,8 @@ Após fazer clone do projeto...
 * [Dart](https://dart.dev/)
 * [Pub Dev](https://pub.dev/)
 * [Firebase](https://firebase.google.com/?hl=pt-br)
+* [Shared Preferences](https://pub.dev/packages/shared_preferences)
+
 * [Android Studio](https://developer.android.com/studio)
 * [Visual Studio Code](https://code.visualstudio.com/)
 
