@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_flutter_fiap/screens/home/home_screen.dart';
 import 'package:crud_flutter_fiap/utils/security_util.dart';
@@ -34,7 +37,8 @@ class StartState extends State<AddEditScreen> {
 
   String id = "";
   String userId = '';
-  String profileImg = "";
+  String profileUrl = '';
+  Uint8List profileImg = base64Decode('');
 
   final List<String> _levelValues = [
     "High",
@@ -103,7 +107,13 @@ class StartState extends State<AddEditScreen> {
 
       Map<String, dynamic> data = querySnapshot.docs[0].data();
       setState(() {
-        profileImg = data['profilePicture'].toString();
+        if (data['profilePicture'].toString().contains('http')) {
+          profileUrl = data['profilePicture'].toString();
+        } else {
+          String base64 = data['profilePicture'];
+          Uint8List bytes = base64Decode(base64);
+          profileImg = bytes;
+        }
       });
 
       await getSkill();
@@ -139,10 +149,15 @@ class StartState extends State<AddEditScreen> {
             child: Column(
           children: [
             const SizedBox(height: 24),
-            CircleAvatar(
-              radius: 60.0,
-              backgroundImage: NetworkImage(profileImg),
-            ),
+            profileUrl.toString() == ''
+                ? CircleAvatar(
+                  radius: 60.0,
+                  backgroundImage: MemoryImage(profileImg),
+                )
+                : CircleAvatar(
+                  radius: 60.0,
+                  backgroundImage: NetworkImage(profileUrl),
+                ),
             const SizedBox(height: 24),
             RoundedTextField(
               hint: 'Skill',
@@ -224,15 +239,17 @@ class StartState extends State<AddEditScreen> {
                 final navigator = Navigator.of(context);
                 navigator.pop();
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ));
               },
               child: const RoundedButton(color: Color(0xffee4c83), text: "Cancelar"),
             ),
           ],
-        )));
+        )
+      )
+    );
   }
 
   bool validateFields() {

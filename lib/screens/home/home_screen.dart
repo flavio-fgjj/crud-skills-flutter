@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_flutter_fiap/screens/add_edit_screen.dart';
 import 'package:crud_flutter_fiap/screens/home/model/skill.model.dart';
@@ -23,9 +27,10 @@ class StartState extends State<HomeScreen> {
   List<SkillModel> skillsData = [];
   String userId = '';
 
-  String profileImg = "";
+  Uint8List profileImg = base64Decode('');
   String userName = '';
   String userEmail = '';
+  String profileUrl = '';
 
   @override
   void initState() {
@@ -53,7 +58,13 @@ class StartState extends State<HomeScreen> {
 
       Map<String, dynamic> data = querySnapshot.docs[0].data();
       setState(() {
-        profileImg = data['profilePicture'].toString();
+        if (data['profilePicture'].toString().contains('http')) {
+          profileUrl = data['profilePicture'].toString();
+        } else {
+          String base64 = data['profilePicture'];
+          Uint8List bytes = base64Decode(base64);
+          profileImg = bytes;
+        }
         userName = data['name'];
         userEmail = data['email'];
       });
@@ -116,9 +127,14 @@ class StartState extends State<HomeScreen> {
         ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 12),
-          child: CircleAvatar(
+          child: profileUrl.toString() == '' ?
+          CircleAvatar(
             radius: 60.0,
-            backgroundImage: NetworkImage(profileImg),
+            backgroundImage: MemoryImage(profileImg),
+          )
+          : CircleAvatar(
+            radius: 60.0,
+            backgroundImage: NetworkImage(profileUrl),
           ),
         ), // 1
         title: Column(
@@ -166,8 +182,8 @@ class StartState extends State<HomeScreen> {
                   ),
                   title: Text('${skill.skill} | ${skill.level} level'),
                   subtitle: Text(
-                      '${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'),
-                  //trailing: const Icon(Icons.delete, color: Color(0xff2e2e2e)),
+                   '${skill.timeExperience.toString().replaceAll(" years", "")} ano(s) de experiëncia'
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
