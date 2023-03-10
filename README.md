@@ -45,24 +45,24 @@ Após fazer clone do projeto...
 
 Splash
 
-![image](https://user-images.githubusercontent.com/9452793/223852000-58ee49a3-ca8b-45d3-9b4a-657252d34c89.png)
+![image](https://user-images.githubusercontent.com/9452793/224336463-c0f4d4fc-4b75-4fe8-a6d0-81b942575c37.png)
 
 Login
 
-![image](https://user-images.githubusercontent.com/9452793/223851628-66136e1c-0f02-41d4-a04a-2030d198e550.png)
+![image](https://user-images.githubusercontent.com/9452793/224337023-c8df6d67-03b4-40f4-b273-ca9471769c07.png)
 
 Signup
 
-![image](https://user-images.githubusercontent.com/9452793/223853130-f2c509bc-68df-4fd6-a943-26cbc985400e.png)
+![image](https://user-images.githubusercontent.com/9452793/224337112-dc3a738a-c8d6-490f-9b78-946b0213181e.png)
 
 Home
 
-![image](https://user-images.githubusercontent.com/9452793/223856460-57a12915-983f-4eed-9662-dc636f858370.png)
+![image](https://user-images.githubusercontent.com/9452793/224336632-9326d0ef-cb4f-4136-b1cc-fe3f95ad17eb.png)
 
-Add 
+Add Nova Skill
 
-![image](https://user-images.githubusercontent.com/9452793/223856548-be6d4c33-6761-4184-b4d3-a1eb675a0552.png)
+![image](https://user-images.githubusercontent.com/9452793/224336764-6167d9c1-e643-46a5-ad84-c41ff8c6624b.png)
 
-Edit
+Editar Skill
 
-![image](https://user-images.githubusercontent.com/9452793/223856630-680981bb-3839-45dc-9573-4ed2978e9ad4.png)
+![image](https://user-images.githubusercontent.com/9452793/224336916-be941e32-f324-43b0-861f-5eba0fe8109b.png)
