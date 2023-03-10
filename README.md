@@ -10,7 +10,7 @@ Ao fazer login você ja pode cadastrar suas skills e atualizá-las sempre que qu
 ## 🚀 Começando
 Veja se você tem os pré-requisitos e depois faça o clone para a sua maquina e aproveite 😎
 
-Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como rodar o projeto.
+Consulte **[Recomendação](#-recomenda%C3%A7%C3%A3o)** para saber como rodar o projeto.
 
 ### 📋 Pré-requisitos
 ```
@@ -26,9 +26,9 @@ Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como rodar o pr
 #### [Flávio](https://github.com/flavio-fgjj)
 #### [Samuel](https://github.com/SamuelDevMobile)
 
-## 📦 Implantação
+## 📦 Recomendação
 
-Após fazer clone do projeto...
+Fazer clone a partir da branch develop
 
 ## 🛠️ Desenvolvido usando
 
