@@ -47,7 +47,7 @@ class StartState extends State<AuthScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 50),
                 child: Image.asset(
-                  "assets/MBA.png",
+                  "assets/SuasSkillsBlack.png",
                   height: 90,
                   width: 90,
                 ),
@@ -56,7 +56,7 @@ class StartState extends State<AuthScreen> {
                 margin: const EdgeInsets.only(right: 20, top: 20),
                 alignment: Alignment.bottomRight,
                 child: const Text(
-                  "Login",
+                  "Suas Skills (Login)",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               )

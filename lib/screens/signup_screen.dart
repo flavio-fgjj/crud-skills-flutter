@@ -84,7 +84,7 @@ class InitState extends State<SignUpScreen> {
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       child: Image.asset(
-                        "assets/MBA.png",
+                        "assets/SuasSkillsBlack.png",
                         height: 90,
                         width: 90,
                       ),
@@ -93,7 +93,7 @@ class InitState extends State<SignUpScreen> {
                       margin: const EdgeInsets.only(right: 20, top: 5),
                       alignment: Alignment.bottomRight,
                       child: const Text(
-                        "Nova Conta",
+                        "Suas Skills (Nova Conta)",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     )

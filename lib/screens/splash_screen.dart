@@ -63,7 +63,7 @@ class StartState extends State<SplashScreen> {
         children: [
           Container(
             decoration: const BoxDecoration(
-                color: Color(0xffee4c83),
+                color: Color(0xffe7326f),
                 gradient: RadialGradient(
                   colors: [Color(0xffee4c83), Color(0xff2e2e2e)],
                   center: Alignment.center,
@@ -71,7 +71,7 @@ class StartState extends State<SplashScreen> {
                 )),
           ),
           Center(
-            child: Image.asset("assets/MBA.png"),
+            child: Image.asset("assets/SuasSkillsBlack.png"),
           )
         ],
       ),

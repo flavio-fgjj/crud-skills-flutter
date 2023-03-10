@@ -135,7 +135,7 @@ class StartState extends State<AddEditScreen> {
           title: Column(
             children: [
               Text(
-                widget.idCollection != '_' ? "Editar" : "Adicionar",
+                widget.idCollection != '_' ? "Editar Skill" : "Nova Skill",
                 style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.white,
